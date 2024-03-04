@@ -91,10 +91,49 @@ function Tree(array) {
 		if (root.right !== null) queue.push(root.right);
 
 		while (queue.length) {
-         const level = queue[0]
-         queue.shift()
+			const level = queue[0];
+			queue.shift();
 			levelOrder(level, result, queue);
 		}
+		return result;
+	}
+
+	function inOrder(root, result = []) {
+		if (root === null) {
+			return;
+		}
+
+		// Traverse left subtree
+		inOrder(root.left, result);
+		// Visit root
+		result.push(root.value);
+		// Traverse right subtree
+		inOrder(root.right, result);
+
+		return result;
+	}
+
+	function preOrder(root, result = []) {
+		if (root === null) {
+			return;
+		}
+
+		result.push(root.value);
+		preOrder(root.left, result);
+		preOrder(root.right, result);
+
+		return result;
+	}
+
+	function postOrder(root, result = []) {
+		if (root === null) {
+			return;
+		}
+
+		postOrder(root.left, result);
+		postOrder(root.right, result);
+		result.push(root.value);
+
 		return result;
 	}
 
@@ -103,7 +142,10 @@ function Tree(array) {
 		insert,
 		deleteItem,
 		find,
-      levelOrder,
+		levelOrder,
+		inOrder,
+		preOrder,
+		postOrder,
 	};
 }
 
@@ -138,19 +180,26 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(tree.root); // visualize the binary search tree
 
-console.log("INSERT");
-tree.insert(5, tree.root);
-prettyPrint(tree.root);
+// console.log("INSERT");
+// tree.insert(5, tree.root);
+// prettyPrint(tree.root);
 
-console.log("DELETE");
-tree.deleteItem(5, tree.root);
-prettyPrint(tree.root);
+// console.log("DELETE");
+// tree.deleteItem(5, tree.root);
+// prettyPrint(tree.root);
 
-tree.deleteItem(67, tree.root);
-prettyPrint(tree.root);
+// tree.deleteItem(67, tree.root);
+// prettyPrint(tree.root);
 
-console.log("FIND");
-const foundNode = tree.find(4, tree.root);
-console.log(foundNode);
+// console.log("FIND");
+// const foundNode = tree.find(4, tree.root);
+// console.log(foundNode);
 
-console.log(tree.levelOrder(tree.root))
+// console.log("levelOrder");
+// console.log(tree.levelOrder(tree.root));
+console.log("inOrder");
+console.log(tree.inOrder(tree.root));
+console.log("preOrder");
+console.log(tree.preOrder(tree.root));
+console.log("postOrder");
+console.log(tree.postOrder(tree.root));
