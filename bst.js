@@ -166,6 +166,20 @@ function Tree(array) {
     }
 	}
 
+   function depth(node, root) {
+      let depth = 0;
+      // Traverse to find node position, calculate depth along the way
+		while (node !== root.value) {
+			if (node > root.value) {
+				root = root.right;
+			} else {
+				root = root.left;
+			}
+         depth ++;
+		}
+      return depth;
+   }
+
 	return {
 		root,
 		insert,
@@ -176,6 +190,7 @@ function Tree(array) {
 		preOrder,
 		postOrder,
 		height,
+      depth,
 	};
 }
 
@@ -236,3 +251,6 @@ prettyPrint(tree.root); // visualize the binary search tree
 
 console.log("HEIGHT");
 console.log(tree.height(6345, tree.root));
+
+console.log("DEPTH");
+console.log(tree.depth(6345, tree.root));
