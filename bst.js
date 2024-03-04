@@ -79,11 +79,31 @@ function Tree(array) {
 		}
 	}
 
+	function levelOrder(root, result = [], queue = []) {
+		if (root === null) {
+			return [];
+		}
+
+		result.push(root.value);
+
+		// Traverse to left and right children -> add to queue
+		if (root.left !== null) queue.push(root.left);
+		if (root.right !== null) queue.push(root.right);
+
+		while (queue.length) {
+         const level = queue[0]
+         queue.shift()
+			levelOrder(level, result, queue);
+		}
+		return result;
+	}
+
 	return {
 		root,
 		insert,
 		deleteItem,
 		find,
+      levelOrder,
 	};
 }
 
@@ -132,3 +152,5 @@ prettyPrint(tree.root);
 console.log("FIND");
 const foundNode = tree.find(4, tree.root);
 console.log(foundNode);
+
+console.log(tree.levelOrder(tree.root))
