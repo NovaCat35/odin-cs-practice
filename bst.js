@@ -137,6 +137,35 @@ function Tree(array) {
 		return result;
 	}
 
+	function height(node, root) {
+		// Traverse to find node position
+		while (node !== root.value) {
+			if (node > root.value) {
+				root = root.right;
+			} else {
+				root = root.left;
+			}
+		}
+
+    // Call the helper function to calculate the height from the found node
+    const nodeHeight = calculateHeight(root);
+    return nodeHeight;
+
+    function calculateHeight(node) {
+        // Base case: If the node is null, return -1 to represent that the node doesn't exist
+        if (node === null) {
+            return -1;
+        }
+
+        // Recursive calls to find the height of the left and right subtrees
+        const leftHeight = calculateHeight(node.left);
+        const rightHeight = calculateHeight(node.right);
+
+        // Return the maximum height among left and right subtrees, plus 1 (to account for the current node)
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+	}
+
 	return {
 		root,
 		insert,
@@ -146,6 +175,7 @@ function Tree(array) {
 		inOrder,
 		preOrder,
 		postOrder,
+		height,
 	};
 }
 
@@ -197,9 +227,12 @@ prettyPrint(tree.root); // visualize the binary search tree
 
 // console.log("levelOrder");
 // console.log(tree.levelOrder(tree.root));
-console.log("inOrder");
-console.log(tree.inOrder(tree.root));
-console.log("preOrder");
-console.log(tree.preOrder(tree.root));
-console.log("postOrder");
-console.log(tree.postOrder(tree.root));
+// console.log("inOrder");
+// console.log(tree.inOrder(tree.root));
+// console.log("preOrder");
+// console.log(tree.preOrder(tree.root));
+// console.log("postOrder");
+// console.log(tree.postOrder(tree.root));
+
+console.log("HEIGHT");
+console.log(tree.height(6345, tree.root));
