@@ -10,7 +10,7 @@ function Tree(array) {
 	// Sort the array to maintain the BST property
 	array.sort((a, b) => a - b);
 
-	const root = buildTree(array);
+	let root = buildTree(array);
 
 	function insert(value, root) {
 		// Always insert value as a leaf node
@@ -191,6 +191,18 @@ function Tree(array) {
       return diff < 2 ? 'balanced' : 'unbalanced'
    }
 
+   function rebalance(root) {
+      // Gather all values into an array using in-order traversal
+      const values = inOrder(root);
+
+      // Build a new balanced tree from the array
+      root = buildTree(values);
+      console.log(root)
+      return root;
+  }
+  
+  
+
 	return {
 		root,
 		insert,
@@ -203,6 +215,7 @@ function Tree(array) {
 		height,
       depth,
       isBalanced,
+      rebalance,
 	};
 }
 
@@ -269,3 +282,22 @@ console.log(tree.depth(6345, tree.root));
 
 console.log("Tree Balance Check");
 console.log(tree.isBalanced(tree.root));
+
+console.log("Rebalance tree");
+console.log(tree.isBalanced(tree.root));
+
+// -----
+
+let tree2 = Tree([1]);
+prettyPrint(tree2.root); // visualize the binary search tree
+
+console.log("INSERT (unbalancing the tree)");
+tree2.insert(2, tree2.root);
+tree2.insert(3, tree2.root);
+tree2.insert(4, tree2.root);
+tree2.insert(5, tree2.root);
+prettyPrint(tree2.root);
+
+console.log("Rebalance tree");
+let newTree = tree2.rebalance(tree2.root);
+prettyPrint(newTree);
