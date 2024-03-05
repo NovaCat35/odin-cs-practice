@@ -137,6 +137,21 @@ function Tree(array) {
 		return result;
 	}
 
+   function calculateHeight(node) {
+      // Base case: If the node is null, return -1 to represent that the node doesn't exist
+      if (node === null) {
+          return -1;
+      }
+
+      // Recursive calls to find the height of the left and right subtrees
+      const leftHeight = calculateHeight(node.left);
+      const rightHeight = calculateHeight(node.right);
+
+      // Return the maximum height among left and right subtrees, plus 1 (to account for the current node)
+      return Math.max(leftHeight, rightHeight) + 1;
+  }
+
+  // Calculates the height of the tree
 	function height(node, root) {
 		// Traverse to find node position
 		while (node !== root.value) {
@@ -150,20 +165,6 @@ function Tree(array) {
     // Call the helper function to calculate the height from the found node
     const nodeHeight = calculateHeight(root);
     return nodeHeight;
-
-    function calculateHeight(node) {
-        // Base case: If the node is null, return -1 to represent that the node doesn't exist
-        if (node === null) {
-            return -1;
-        }
-
-        // Recursive calls to find the height of the left and right subtrees
-        const leftHeight = calculateHeight(node.left);
-        const rightHeight = calculateHeight(node.right);
-
-        // Return the maximum height among left and right subtrees, plus 1 (to account for the current node)
-        return Math.max(leftHeight, rightHeight) + 1;
-    }
 	}
 
    function depth(node, root) {
@@ -180,6 +181,16 @@ function Tree(array) {
       return depth;
    }
 
+   // A balanced tree is one where the difference between heights of the left subtree and the right subtree of every node is not more than 1.
+   function isBalanced(root) {
+      // Recursive calls to find the height of the left and right subtrees
+      const leftHeight = calculateHeight(root.left);
+      const rightHeight = calculateHeight(root.right);
+
+      const diff = Math.abs(leftHeight - rightHeight);
+      return diff < 2 ? 'balanced' : 'unbalanced'
+   }
+
 	return {
 		root,
 		insert,
@@ -191,6 +202,7 @@ function Tree(array) {
 		postOrder,
 		height,
       depth,
+      isBalanced,
 	};
 }
 
@@ -254,3 +266,6 @@ console.log(tree.height(6345, tree.root));
 
 console.log("DEPTH");
 console.log(tree.depth(6345, tree.root));
+
+console.log("Tree Balance Check");
+console.log(tree.isBalanced(tree.root));
